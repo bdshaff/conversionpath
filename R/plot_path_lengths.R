@@ -3,8 +3,8 @@
 #' @param path_list path_list
 #' @return plotly plot
 
-plot_path_lengths = function(path_list){
-  path_lengths = data.frame(path_length = map_int(path_list, ~length(.x)))
+plot_path_lengths <- function(path_list) {
+  path_lengths <- data.frame(path_length = map_int(path_list, ~ length(.x)))
 
   ggplotly(
     path_lengths %>%

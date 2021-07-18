@@ -6,24 +6,25 @@
 #' @return a list
 
 
-conversion_flow_diagram = function(transition_matrix, num_steps, num_sim){
+conversion_flow_diagram <- function(transition_matrix, num_steps, num_sim) {
+  sim_tb <- simulate_path_table(transition_matrix, num_steps, num_sim)
 
-  sim_tb = simulate_path_table(transition_matrix, num_steps, num_sim)
-
-  sim_tb_agg =
+  sim_tb_agg <-
     sim_tb %>%
     group_by(source, target) %>%
     summarise(volume = n()) %>%
     filter(volume > 0)
 
-  nodes =
+  nodes <-
     data.frame(name = c(unique(sim_tb_agg$source), unique(sim_tb_agg$target))) %>%
     unique() %>%
     mutate(id = 1:n() - 1) %>%
-    mutate(step = as.factor(as.numeric(as.factor(str_sub(name, 1,1)))),
-           group = str_extract(name, "\\-.*"))
+    mutate(
+      step = as.factor(as.numeric(as.factor(str_sub(name, 1, 1)))),
+      group = str_extract(name, "\\-.*")
+    )
 
-  links =
+  links <-
     sim_tb_agg %>%
     ungroup() %>%
     left_join(nodes, by = c("source" = "name")) %>%
@@ -36,7 +37,6 @@ conversion_flow_diagram = function(transition_matrix, num_steps, num_sim){
   p <- plot_ly(
     type = "sankey",
     orientation = "h",
-
     node = list(
       label = nodes$name,
       color = pals::alphabet()[as.numeric(as.factor(nodes$group))],
@@ -47,12 +47,11 @@ conversion_flow_diagram = function(transition_matrix, num_steps, num_sim){
         width = 0
       )
     ),
-
     link = list(
       source = links$source,
       target = links$target,
       value = links$volume
-      #color = links$source
+      # color = links$source
     )
   ) %>%
     layout(
@@ -62,8 +61,10 @@ conversion_flow_diagram = function(transition_matrix, num_steps, num_sim){
       )
     )
 
-  return(list(conversion_flow_diagram = p,
-              nodes = nodes,
-              links = links,
-              simulated_path_table = sim_tb))
+  return(list(
+    conversion_flow_diagram = p,
+    nodes = nodes,
+    links = links,
+    simulated_path_table = sim_tb
+  ))
 }

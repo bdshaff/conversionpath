@@ -3,10 +3,10 @@
 #' @param path_list path_list
 #' @return plotly plot
 
-plot_touchpoint_frequency = function(path_list){
-  touchpoint_frequency = sort(table(unlist(path_list)))
-  touchpoint_frequency = data.frame(touchpoint_frequency)
-  names(touchpoint_frequency) = c("touchpoint","frequency")
+plot_touchpoint_frequency <- function(path_list) {
+  touchpoint_frequency <- sort(table(unlist(path_list)))
+  touchpoint_frequency <- data.frame(touchpoint_frequency)
+  names(touchpoint_frequency) <- c("touchpoint", "frequency")
 
   ggplotly(
     touchpoint_frequency %>%
