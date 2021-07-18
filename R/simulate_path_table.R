@@ -1,4 +1,4 @@
-#' Simulate Path From Transition Matrix
+#' Simulate Path Table From Transition Matrix
 #'
 #' @param transition_matrix transition_matrix
 #' @param num_steps num_steps

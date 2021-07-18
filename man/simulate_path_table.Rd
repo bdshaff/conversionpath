@@ -2,7 +2,7 @@
 % Please edit documentation in R/simulate_path_table.R
 \name{simulate_path_table}
 \alias{simulate_path_table}
-\title{Simulate Path From Transition Matrix}
+\title{Simulate Path Table From Transition Matrix}
 \usage{
 simulate_path_table(transition_matrix, num_steps, num_sim)
 }
@@ -17,5 +17,5 @@ simulate_path_table(transition_matrix, num_steps, num_sim)
 data.frame
 }
 \description{
-Simulate Path From Transition Matrix
+Simulate Path Table From Transition Matrix
 }
