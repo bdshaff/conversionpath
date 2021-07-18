@@ -1,12 +1,13 @@
 Package: conversionpath
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Tools for Conversion Path Data Analysis
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
+Author: Ben Denis Shaffer
+Maintainer: Ben Denis Shaffer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
     Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
+Imports: plotly, magrittr, purrr, dplyr, ggplot2, stringr, pals

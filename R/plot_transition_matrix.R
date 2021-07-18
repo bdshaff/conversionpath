@@ -1,3 +1,8 @@
+#' Plot Markov Chain Transition Matrix
+#'
+#' @param transition_matrix transition_matrix
+#' @return plotly plot
+
 plot_transition_matrix = function(transition_matrix){
   M = transition_matrix
   plot_ly(
