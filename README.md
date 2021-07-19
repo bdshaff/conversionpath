@@ -6,6 +6,18 @@ Tools for Conversion Path Data Analysis
 
 ## Download
 
+```r
+devtools::install_github("bdshaff/conversionpath")
+
+```
+
+## Demo
+
+Here is a flexdashboard that demonstrates some of the functionality and visualizations provided by the package
+
+http://bdshaff.shinyapps.io/CP-FlexDash
+
+
 ## Functionality
 
 ## Functions
