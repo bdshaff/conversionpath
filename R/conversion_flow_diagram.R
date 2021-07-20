@@ -6,35 +6,28 @@
 #' @return a list
 
 
-conversion_flow_diagram <- function(transition_matrix, num_steps, num_sim) {
+conversion_flow <- function(transition_matrix, num_steps, num_sim) {
   sim_tb <- simulate_path_table(transition_matrix, num_steps, num_sim)
 
-  sim_tb_agg <-
-    sim_tb %>%
-    group_by(source, target) %>%
-    summarise(volume = n()) %>%
-    filter(volume > 0)
+  sim_tb_agg <- dplyr::group_by(sim_tb, source, target)
+  sim_tb_agg <- dplyr::summarise(sim_tb_agg, volume = dplyr::n())
+  sim_tb_agg <- dplyr::filter(sim_tb_agg, volume > 0)
 
-  nodes <-
-    data.frame(name = c(unique(sim_tb_agg$source), unique(sim_tb_agg$target))) %>%
-    unique() %>%
-    mutate(id = 1:n() - 1) %>%
-    mutate(
-      step = as.factor(as.numeric(as.factor(str_sub(name, 1, 1)))),
-      group = str_extract(name, "\\-.*")
-    )
+  nodes <- unique(data.frame(name = c(unique(sim_tb_agg$source), unique(sim_tb_agg$target))))
+  nodes <- dplyr::mutate(nodes, id = 1:dplyr::n() - 1)
+  nodes <- dplyr::mutate(nodes,
+    step = as.factor(as.numeric(as.factor(stringr::str_sub(name, 1, 1)))),
+    group = stringr::str_extract(name, "\\-.*")
+  )
 
-  links <-
-    sim_tb_agg %>%
-    ungroup() %>%
-    left_join(nodes, by = c("source" = "name")) %>%
-    rename(src = id) %>%
-    left_join(nodes, by = c("target" = "name")) %>%
-    rename(tar = id) %>%
-    select(source = src, target = tar, volume) %>%
-    as.data.frame()
+  links <- dplyr::ungroup(sim_tb_agg)
+  links <- dplyr::left_join(links, nodes, by = c("source" = "name"))
+  links <- dplyr::rename(links, src = id)
+  links <- dplyr::left_join(links, nodes, by = c("target" = "name"))
+  links <- dplyr::rename(links, tar = id)
+  links <- as.data.frame(dplyr::select(links, source = src, target = tar, volume))
 
-  p <- plot_ly(
+  p <- plotly::plot_ly(
     type = "sankey",
     orientation = "h",
     node = list(
@@ -53,8 +46,9 @@ conversion_flow_diagram <- function(transition_matrix, num_steps, num_sim) {
       value = links$volume
       # color = links$source
     )
-  ) %>%
-    layout(
+  )
+  p <-
+    plotly::layout(p,
       title = "Conversion Flow Diagram",
       font = list(
         size = 10

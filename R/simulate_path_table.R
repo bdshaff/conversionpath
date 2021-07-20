@@ -7,7 +7,7 @@
 
 simulate_path_table <- function(transition_matrix, num_steps, num_sim) {
   sim_tb <-
-    map(1:num_sim, ~ simulate_path(transition_matrix, num_steps)$target_table) %>%
-    bind_rows(.id = "path_id")
+    purrr::map(1:num_sim, ~ simulate_path(transition_matrix, num_steps)$target_table) %>%
+    dplyr::bind_rows(.id = "path_id")
   return(sim_tb)
 }

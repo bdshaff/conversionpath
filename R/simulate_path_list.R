@@ -8,8 +8,8 @@
 simulate_path_list <- function(transition_matrix, num_sim, lambda = 5) {
 
   path_lengths = rpois(num_sim, lambda - 2) + 2
-  path_list = map(path_lengths, ~simulate_path(transition_matrix, num_steps = .x)$path)
-  path_list = map(path_list, ~remove_rep_tchp(.x))
+  path_list = purrr::map(path_lengths, ~simulate_path(transition_matrix, num_steps = .x)$path)
+  path_list = purrr::map(path_list, ~remove_rep_tchp(.x))
 
   return(path_list)
 }

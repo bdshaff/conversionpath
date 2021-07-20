@@ -5,7 +5,7 @@
 
 plot_transition_matrix <- function(transition_matrix) {
   M <- transition_matrix
-  plot_ly(
+  plotly::plot_ly(
     x = colnames(M[-c(1, 2, 3), -c(1, 2, 3)]),
     y = row.names(M[-c(1, 2, 3), -c(1, 2, 3)]),
     z = M[-c(1, 2, 3), -c(1, 2, 3)],

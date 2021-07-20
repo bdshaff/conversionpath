@@ -22,9 +22,9 @@ extract_path_list <- function(path_data, remove_repeating = FALSE) {
     stop("path_data must contain column named drop_count of type numeric")
   }
 
-  path_list <- purrr::map(path_data$path, ~  stringr::str_split(.x, ">")) %>%
-    purrr::flatten() %>%
-    purrr::map(~ stringr::str_trim(.x))
+  path_list <- purrr::map(path_data$path, ~  stringr::str_split(.x, ">"))
+  path_list <- purrr::flatten(path_list)
+  path_list <- purrr::map(path_list, ~ stringr::str_trim(.x))
 
   if(remove_repeating) {
     cat("Removing touch-points that are repeated within paths.\n")

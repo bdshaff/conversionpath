@@ -23,11 +23,10 @@ simulate_path <- function(transition_matrix, num_steps = 10) {
   nodes <- data.frame(name = colnames(MM), path = 1:ncol(MM))
 
   step <- 1:num_steps
-  pd <-
-    data.frame(step, path) %>%
-    left_join(nodes) %>%
-    mutate(step_name = paste0(step, "-", name)) %>%
-    filter(path != 0)
+  pd <- data.frame(step, path)
+  pd <- dplyr::left_join(pd, nodes)
+  pd <- dplyr::mutate(pd, step_name = paste0(step, "-", name))
+  pd <- dplyr::filter(pd, path != 0)
 
   source <- pd$step_name[1:(nrow(pd) - 1)]
   target <- pd$step_name[-1]
