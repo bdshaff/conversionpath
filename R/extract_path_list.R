@@ -5,14 +5,31 @@
 #' @return a list of paths
 
 extract_path_list <- function(path_data, remove_repeating = FALSE) {
-  P <- map(path_data$path, ~ str_split(.x, ">")) %>%
-    flatten() %>%
-    map(~ str_trim(.x))
 
-  if (remove_repeating) {
-    cat("Removing touch-points that are repeated within paths.\n")
-    P <- map(P, ~ remove_rep_tchp(.x))
+  if(!is.data.frame(path_data)){
+    stop("path_data must be a data.frame")
   }
 
-  return(P)
+  if(is.null(path_data$path) | !is.character(path_data$path)){
+    stop("path_data must contain column named path of type character")
+  }
+
+  if(is.null(path_data$conv_count) | !is.numeric(path_data$conv_count)){
+    stop("path_data must contain column named conv_count of type numeric")
+  }
+
+  if(is.null(path_data$drop_count) | !is.numeric(path_data$drop_count)){
+    stop("path_data must contain column named drop_count of type numeric")
+  }
+
+  path_list <- purrr::map(path_data$path, ~  stringr::str_split(.x, ">")) %>%
+    purrr::flatten() %>%
+    purrr::map(~ stringr::str_trim(.x))
+
+  if(remove_repeating) {
+    cat("Removing touch-points that are repeated within paths.\n")
+    path_list <- purrr::map(path_list, ~ remove_rep_tchp(.x))
+  }
+
+  return(path_list)
 }
