@@ -4,6 +4,11 @@
 #' @return plotly plot
 
 plot_transition_matrix <- function(transition_matrix) {
+
+  if(!is.proper_transition_matrix(transition_matrix)){
+    stop("Need a proper transition matrix")
+  }
+
   M <- transition_matrix
   plotly::plot_ly(
     x = colnames(M[-c(1, 2, 3), -c(1, 2, 3)]),

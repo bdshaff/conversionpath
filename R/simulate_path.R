@@ -6,6 +6,19 @@
 
 
 simulate_path <- function(transition_matrix, num_steps = 10) {
+
+  if(!is.proper_transition_matrix(transition_matrix)){
+    stop("Need a proper transition matrix")
+  }
+
+  if(!is.numeric(num_steps)){
+    stop("num_steps must be an integer and > 1")
+  }
+
+  if(num_steps < 2){
+    stop("num_steps must be an integer and > 1")
+  }
+
   path <- vector(mode = "integer", length = num_steps)
 
   MM <- transition_matrix
@@ -24,7 +37,7 @@ simulate_path <- function(transition_matrix, num_steps = 10) {
 
   step <- 1:num_steps
   pd <- data.frame(step, path)
-  pd <- dplyr::left_join(pd, nodes)
+  pd <- dplyr::left_join(pd, nodes, by = "path")
   pd <- dplyr::mutate(pd, step_name = paste0(step, "-", name))
   pd <- dplyr::filter(pd, path != 0)
 

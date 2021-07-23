@@ -1,9 +1,27 @@
 #' Compose a Random Markov Chain Transition Matrix
 #'
+#' This function allows you to generate a random markov chain transition matrix following the form
+#' required for the conversion path analysis i.e. Square matrix with two absorbing states (conv, drop),
+#' a (start) state that can't be reached from any other state, and a user defined set of states
+#' representing possible touch points on path to conversion.
+#'
 #' @param unique_tchp_type unique_tchp_type
 #' @return a transition matrix
 
 compose_transition_matrix = function(unique_tchp_type){
+
+  if(!is.vector(unique_tchp_type, mode = "character")){
+    stop("unique_tchp_type must be a character vector")
+  }
+
+  if(length(unique(unique_tchp_type)) < 2){
+    stop("must supply at least two distinct touchpoints")
+  }
+
+  if(!(length(unique(unique_tchp_type)) == length(unique_tchp_type))){
+    stop("all supplied touchpoints must be distinct")
+  }
+
   n_unique_tchp_type = length(unique_tchp_type)
 
   rfill = runif(n_unique_tchp_type + 3 * n_unique_tchp_type + 3)

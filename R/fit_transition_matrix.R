@@ -24,11 +24,7 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   split_paths <- path_list
 
   # get the state space from the data
-  unique_tchp_type <- split_paths %>%
-    unlist() %>%
-    stringr::str_trim() %>%
-    unique() %>%
-    sort()
+  unique_tchp_type <- sort(unique(stringr::str_trim(unlist(split_paths))))
   # get thee number of possible states
   n_unique_tchp_type <- length(unique_tchp_type)
 
@@ -41,24 +37,22 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   for (tpi in 1:n_unique_tchp_type) {
     tp <- unique_tchp_type[tpi]
     print(paste0("Start: ", tp))
+
     # get the index of where the touch-point occurs across all paths
-    index_list <-purrr::map(split_paths, ~ stringr::str_trim(.x)) %>% purrr::map(~ which(.x == tp))
+    split_paths_trimmed <- purrr::map(split_paths, ~ stringr::str_trim(.x))
+    index_list <- purrr::map(split_paths_trimmed, ~ which(.x == tp))
+
     # get the counts of transitions to the next touch-point by adding 1 to the index list
     tp_count <- purrr::map2(split_paths, index_list, ~ .x[.y + 1])
 
-    tp_count_total <- purrr::map2(tp_count, total_count, ~ table(.x) * .y) %>% unlist()
+    tp_count_total <- unlist(purrr::map2(tp_count, total_count, ~ table(.x) * .y))
 
-    tb_count_table <-
-      data.frame(name = names(tp_count_total), value = tp_count_total) %>%
-      dplyr::group_by(name) %>%
-      dplyr::summarise(val = sum(value))
+    tb_count_table <- data.frame(name = names(tp_count_total), value = tp_count_total)
+    tb_count_table <- dplyr::group_by(tb_count_table, name)
+    tb_count_table <- dplyr::summarise(tb_count_table , val = sum(value))
 
-    total_conv_count <- sum(conv_count[purrr::map(split_paths, ~ stringr::str_trim(.x)) %>%
-      purrr::map(~ .x[length(.x)] == tp) %>%
-      unlist()])
-    total_drop_count <- sum(drop_count[purrr::map(split_paths, ~ stringr::str_trim(.x)) %>%
-     purrr:: map(~ .x[length(.x)] == tp) %>%
-      unlist()])
+    total_conv_count <- sum(conv_count[unlist(purrr::map(split_paths_trimmed, ~ .x[length(.x)] == tp))])
+    total_drop_count <- sum(drop_count[unlist(purrr:: map(split_paths_trimmed, ~ .x[length(.x)] == tp))])
 
     ## CHECK contents of the table
     tb_count_table <-
@@ -88,12 +82,12 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   Mat["conv", "conv"] <- 1
   Mat["drop", "drop"] <- 1
 
-  start_count <-purrr:: map(split_paths, ~ stringr::str_trim(.x[1])) %>%
-    unlist() %>%
-    table()
+  start_count <- table(unlist(purrr:: map(split_paths, ~ stringr::str_trim(.x[1]))))
   start_prob <- start_count / sum(start_count)
   start_prob <- c(start_prob, conv = 0, drop = 0)
   start_prob <- start_prob[colnames(Mat)]
+  start_prob[is.na(start_prob)] <- 0
+  names(start_prob) <- colnames(Mat)
 
   # Mat = Mat[-which(rownames(Mat) == "conversion"),]
   M <- rbind(start = start_prob[colnames(Mat)], Mat)
