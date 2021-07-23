@@ -21,33 +21,49 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   split_paths <- path_list
   unique_tchp_type <- sort(unique(stringr::str_trim(unlist(split_paths))))
   n_unique_tchp_type <- length(unique_tchp_type)
-  Mat <- matrix(0, nrow = n_unique_tchp_type + 2, ncol = n_unique_tchp_type + 2)
+  Mat <- matrix(0, nrow = n_unique_tchp_type + 2, ncol = n_unique_tchp_type +
+    2)
   colnames(Mat) <- c("conv", "drop", unique_tchp_type)
   row.names(Mat) <- c("conv", "drop", unique_tchp_type)
   for (tpi in 1:n_unique_tchp_type) {
     tp <- unique_tchp_type[tpi]
     print(paste0("Start: ", tp))
     split_paths_trimmed <- purrr::map(split_paths, ~ stringr::str_trim(.x))
-    index_list <- purrr::map(split_paths_trimmed, ~ which(.x == tp))
-    tp_count <- purrr::map2(split_paths, index_list, ~ .x[.y + 1])
-    if (length(unlist(tp_count)) == 1) {
-      if (!is.na(unlist(tp_count))) {
-        tp_count_total <- unlist(purrr::map2(tp_count, total_count, ~ table(.x) * .y))
-        tb_count_table <- data.frame(name = names(tp_count_total), value = tp_count_total)
-        tb_count_table <- dplyr::group_by(tb_count_table, name)
-        tb_count_table <- dplyr::summarise(tb_count_table, val = sum(value))
-      } else {
-        tb_count_table <- NULL
-      }
+    index_list <- purrr::map(split_paths_trimmed, ~ which(.x ==
+      tp))
+    tp_count <- purrr::map2(split_paths, index_list, ~ .x[.y +
+      1])
+    if (all(is.na(unlist(tp_count)))) {
+      tb_count_table <- NULL
     } else {
-      tp_count_total <- unlist(purrr::map2(tp_count, total_count, ~ table(.x) * .y))
-      tb_count_table <- data.frame(name = names(tp_count_total), value = tp_count_total)
-      tb_count_table <- dplyr::group_by(tb_count_table, name)
-      tb_count_table <- dplyr::summarise(tb_count_table, val = sum(value))
+      tp_count_total <- unlist(purrr::map2(
+        tp_count, total_count,
+        ~ table(.x) * .y
+      ))
+      tb_count_table <- data.frame(
+        name = names(tp_count_total),
+        value = tp_count_total
+      )
+      tb_count_table <- dplyr::group_by(
+        tb_count_table,
+        name
+      )
+      tb_count_table <- dplyr::summarise(tb_count_table,
+        val = sum(value)
+      )
     }
-    total_conv_count <- sum(conv_count[unlist(purrr::map(split_paths_trimmed, ~ .x[length(.x)] == tp))])
-    total_drop_count <- sum(drop_count[unlist(purrr::map(split_paths_trimmed, ~ .x[length(.x)] == tp))])
-    tb_count_table <- rbind(data.frame(name = c("conv", "drop"), val = c(total_conv_count, total_drop_count)), tb_count_table)
+    total_conv_count <- sum(conv_count[unlist(purrr::map(
+      split_paths_trimmed,
+      ~ .x[length(.x)] == tp
+    ))])
+    total_drop_count <- sum(drop_count[unlist(purrr::map(
+      split_paths_trimmed,
+      ~ .x[length(.x)] == tp
+    ))])
+    tb_count_table <- rbind(data.frame(
+      name = c("conv", "drop"),
+      val = c(total_conv_count, total_drop_count)
+    ), tb_count_table)
     tp_prob <- tb_count_table$val / sum(tb_count_table$val)
     tp_prob_names <- tb_count_table$name
     for (i in 1:length(tp_prob)) {
