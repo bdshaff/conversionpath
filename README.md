@@ -17,8 +17,8 @@ When analyzing conversion paths using markov chains our transition matrix takes 
 
 * first column is a row of probabilities for the starting point of the path.
 * first column is all 0s indicating that the starting position is not accessible from any state in the markov chain.
-* the second and third row/column form a 2x2 identity submatrix designating the absorbing conversion and non-conversion states.
-* the matrix is a proper transision matrix i.e. square and all rows sum to 1.
+* the second and third row/column form a 2x2 identity sub matrix designating the absorbing conversion and non-conversion states.
+* the matrix is a proper transition matrix i.e. square and all rows sum to 1.
 
 |               | start|  conv|  drop| Online-Video| Organic Search| Organic Social| Paid Search| Paid Social| Programmatic|
 |:--------------|-----:|-----:|-----:|------------:|--------------:|--------------:|-----------:|-----------:|------------:|
