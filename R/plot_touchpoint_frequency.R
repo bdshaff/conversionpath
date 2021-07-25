@@ -9,8 +9,7 @@ plot_touchpoint_frequency <- function(path_list) {
   names(touchpoint_frequency) <- c("touchpoint", "frequency")
 
   plotly::ggplotly(
-    touchpoint_frequency %>%
-      ggplot2::ggplot(ggplot2::aes(touchpoint, frequency)) +
+      ggplot2::ggplot(touchpoint_frequency, ggplot2::aes(touchpoint, frequency)) +
       ggplot2::geom_col() +
       ggplot2::theme_minimal() +
       ggplot2::coord_flip() +
