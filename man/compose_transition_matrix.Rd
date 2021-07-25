@@ -7,11 +7,14 @@
 compose_transition_matrix(unique_tchp_type)
 }
 \arguments{
-\item{unique_tchp_type}{unique_tchp_type}
+\item{unique_tchp_type}{a character vector of unique possible touch-points in path to conversion}
 }
 \value{
 a transition matrix
 }
 \description{
-Compose a Random Markov Chain Transition Matrix
+This function allows you to generate a random markov chain transition matrix following the form
+required for the conversion path analysis i.e. Square matrix with two absorbing states (conv, drop),
+a (start) state that can't be reached from any other state, and a user defined set of unique states
+representing possible touch points on path to conversion.
 }

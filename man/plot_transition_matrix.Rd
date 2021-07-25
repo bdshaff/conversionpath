@@ -4,7 +4,7 @@
 \alias{plot_transition_matrix}
 \title{Plot Markov Chain Transition Matrix}
 \usage{
-plot_transition_matrix(transition_matrix)
+plot_transition_matrix(transition_matrix, full = FALSE)
 }
 \arguments{
 \item{transition_matrix}{transition_matrix}

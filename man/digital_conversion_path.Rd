@@ -16,6 +16,6 @@ A data frame with 676 rows and 3 variables:
 digital_conversion_path
 }
 \description{
-A dataset containing paths to conversion and counts of conversion and non-conversion for each path
+A data-set containing paths to conversion and counts of conversion and non-conversion for each path
 }
 \keyword{datasets}

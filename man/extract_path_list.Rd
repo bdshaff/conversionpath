@@ -15,5 +15,5 @@ extract_path_list(path_data, remove_repeating = FALSE)
 a list of paths
 }
 \description{
-Extract List of Paths from Data
+Given a data.frame with paths in a column `path`, generate a list.
 }

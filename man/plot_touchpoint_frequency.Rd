@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot_touchpoint_frequency.R
 \name{plot_touchpoint_frequency}
 \alias{plot_touchpoint_frequency}
-\title{Plot Touchpoint Frequency}
+\title{Plot Touch-point Frequency}
 \usage{
 plot_touchpoint_frequency(path_list)
 }
@@ -13,5 +13,5 @@ plot_touchpoint_frequency(path_list)
 plotly plot
 }
 \description{
-Plot Touchpoint Frequency
+Plot Touch-point Frequency
 }

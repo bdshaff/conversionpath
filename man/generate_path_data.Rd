@@ -7,11 +7,12 @@
 generate_path_data(path_list)
 }
 \arguments{
-\item{path_list}{path_list}
+\item{path_list}{a list of paths}
 }
 \value{
 data.frame
 }
 \description{
-Generate Path Data from Path List
+Given a list of paths generate an aggragated data.frame.
+If a path doesn't end in a conversions a non-conversion will be assumed.
 }

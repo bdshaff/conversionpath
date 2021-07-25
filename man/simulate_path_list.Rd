@@ -9,13 +9,13 @@ simulate_path_list(transition_matrix, num_sim, lambda = 5)
 \arguments{
 \item{transition_matrix}{transition_matrix}
 
-\item{num_sim}{num_sim}
+\item{num_sim}{number of simulations paths to generate}
 
-\item{lambda}{lambda}
+\item{lambda}{mean of a Poisson(lambda) distribution to sample path length from}
 }
 \value{
 list
 }
 \description{
-Simulate Path List From Transition Matrix
+From a given transition matrix simulate a list of paths
 }

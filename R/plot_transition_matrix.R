@@ -12,20 +12,44 @@ plot_transition_matrix <- function(transition_matrix, full = FALSE) {
   M <- transition_matrix
 
   if(full){
-    plotly::plot_ly(
+
+    cnames = colnames(M)
+    rnames = row.names(M)
+    vals = M
+
+    p = plotly::plot_ly(
       x = colnames(M),
       y = row.names(M),
       z = M,
       type = "heatmap",
       colors = pals::brewer.divbin(3)
     )
+
+    p = plotly::add_annotations(p,
+                                y = rep(rnames, ncol(vals)),
+                                x = rep(rnames, each = ncol(vals)),
+                                text = round(as.vector(vals),2),
+                                showarrow = FALSE)
+
   }else{
-    plotly::plot_ly(
-      x = colnames(M[-c(1, 2, 3), -c(1, 2, 3)]),
-      y = row.names(M[-c(1, 2, 3), -c(1, 2, 3)]),
-      z = M[-c(1, 2, 3), -c(1, 2, 3)],
+
+    cnames = colnames(M[-c(1, 2, 3), -c(1, 2, 3)])
+    rnames = row.names(M[-c(1, 2, 3), -c(1, 2, 3)])
+    vals = M[-c(1, 2, 3), -c(1, 2, 3)]
+    p = plotly::plot_ly(
+      x = cnames,
+      y = rnames,
+      z = vals,
       type = "heatmap",
       colors = pals::brewer.divbin(3)
     )
+
+    p = plotly::add_annotations(p,
+                                y = rep(rnames, ncol(vals)),
+                                x = rep(rnames, each = ncol(vals)),
+                                text = round(as.vector(vals),2),
+                                showarrow = FALSE)
+
   }
+  return(p)
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/remove_rep_tchp.R
 \name{remove_rep_tchp}
 \alias{remove_rep_tchp}
-\title{Remove Repeated Touchpoints}
+\title{Remove Repeated Touch-points}
 \usage{
 remove_rep_tchp(long_path)
 }
@@ -13,5 +13,5 @@ remove_rep_tchp(long_path)
 short path
 }
 \description{
-Remove Repeated Touchpoints
+Remove repeated touch-points in a path if they are adjacent to one another.
 }
