@@ -1,4 +1,4 @@
-#' Plot Touchpoint Frequency
+#' Plot Touch-point Frequency
 #'
 #' @param path_list path_list
 #' @return plotly plot

@@ -1,6 +1,9 @@
 #' Generate Path Data from Path List
 #'
-#' @param path_list path_list
+#' Given a list of paths generate an aggragated data.frame.
+#' If a path doesn't end in a conversions a non-conversion will be assumed.
+#'
+#' @param path_list a list of paths
 #' @return data.frame
 
 generate_path_data <- function(path_list) {

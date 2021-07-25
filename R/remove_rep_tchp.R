@@ -1,4 +1,6 @@
-#' Remove Repeated Touchpoints
+#' Remove Repeated Touch-points
+#'
+#' Remove repeated touch-points in a path if they are adjacent to one another.
 #'
 #' @param long_path long_path
 #' @return short path

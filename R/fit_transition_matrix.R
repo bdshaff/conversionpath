@@ -1,8 +1,11 @@
 #' Compute MLE Markov Chain Transition Matrix
 #'
-#' @param path_list path_list
-#' @param conv_count conv_count
-#' @param drop_count drop_count
+#' This function estimates a transition matrix using MLE.
+#' Given a list of paths and two numeric vectors with a number of total conversions and total cases that do not leaad to a conversion.
+#'
+#' @param path_list a list of paths
+#' @param conv_count vector containing the total conversions.
+#' @param drop_count vector containing the total cases that do not lead to a conversion
 #' @return a transition matrix
 
 
@@ -81,5 +84,10 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   names(start_prob) <- colnames(Mat)
   M <- rbind(start = start_prob[colnames(Mat)], Mat)
   M <- cbind(start = 0, M)
+
+  if(!is.proper_transition_matrix(M)){
+    warning("Estimated transition matrix is not proper. Inspect for repeated touch-points in path_list.", immediate. = TRUE)
+  }
+
   return(M)
 }

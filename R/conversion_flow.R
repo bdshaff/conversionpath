@@ -1,5 +1,8 @@
 #' Simulate Paths and Generate Conversion Flow Diagram
 #'
+#' Given a transition matrix run a simulation to generate `num_sim` number of paths with `num_steps`.
+#' This function will return an aggregated table of transition points as well as the conversion flow diagram.
+#'
 #' @param transition_matrix transition_matrix
 #' @param num_steps num_steps
 #' @param num_sim num_sim

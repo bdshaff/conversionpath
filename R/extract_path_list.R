@@ -1,5 +1,7 @@
 #' Extract List of Paths from Data
 #'
+#' Given a data.frame with paths in a column `path`, generate a list.
+#'
 #' @param path_data path_data
 #' @param remove_repeating remove_repeating
 #' @return a list of paths
