@@ -3,13 +3,16 @@
 #' This function estimates a transition matrix using MLE.
 #' Given a list of paths and two numeric vectors with a number of total conversions and total cases that do not leaad to a conversion.
 #'
-#' @param path_list a list of paths
-#' @param conv_count vector containing the total conversions.
-#' @param drop_count vector containing the total cases that do not lead to a conversion
+#' @param path_data a list of paths
 #' @return a transition matrix
 
 
-fit_transition_matrix <- function(path_list, conv_count, drop_count) {
+fit_transition_matrix <- function(path_data) {
+
+  path_list = extract_path_list(path_data, remove_repeating = TRUE)
+  conv_count = path_data$conv_count
+  drop_count = path_data$drop_count
+
   if (!is.vector(conv_count, mode = "numeric")) {
     stop("conv_count must be a numeric vector")
   }
@@ -30,7 +33,6 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
   row.names(Mat) <- c("conv", "drop", unique_tchp_type)
   for (tpi in 1:n_unique_tchp_type) {
     tp <- unique_tchp_type[tpi]
-    print(paste0("Start: ", tp))
     split_paths_trimmed <- purrr::map(split_paths, ~ stringr::str_trim(.x))
     index_list <- purrr::map(split_paths_trimmed, ~ which(.x ==
       tp))
@@ -72,7 +74,7 @@ fit_transition_matrix <- function(path_list, conv_count, drop_count) {
     for (i in 1:length(tp_prob)) {
       Mat[tp, tp_prob_names[i]] <- tp_prob[i]
     }
-    print(paste0("END: ", tp))
+    cat(paste0(tp,"\n"))
   }
   Mat["conv", "conv"] <- 1
   Mat["drop", "drop"] <- 1

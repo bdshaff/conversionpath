@@ -1,7 +1,7 @@
 Package: ConversionPath
 Type: Package
 Title: Tools for Conversion Path Data Analysis
-Version: 0.1.0
+Version: 0.1.1
 Author: Ben Denis Shaffer
 Maintainer: Ben Denis Shaffer <yourself@somewhere.net>
 Description: More about what it does (maybe more than one line)
