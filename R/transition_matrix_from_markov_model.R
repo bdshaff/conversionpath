@@ -6,10 +6,17 @@
 transition_matrix_from_markov_model = function(mc_model){
 
   trans_mat = mc_model$transition_matrix
+
+  trans_mat[trans_mat$channel_from == "(start)","channel_from"] = -2
+  trans_mat[trans_mat$channel_to == "(conversion)","channel_to"] = -1
+  trans_mat[trans_mat$channel_to == "(null)","channel_to"] = 0
+  trans_mat$channel_to = as.numeric(trans_mat$channel_to)
+  trans_mat$channel_from = as.numeric(trans_mat$channel_from)
+  trans_mat = dplyr::arrange(trans_mat, channel_from, channel_to)
   trans_mat <- tidyr::pivot_wider(trans_mat, names_from = channel_to, values_from = transition_probability)
-  trans_mat <- dplyr::relocate(trans_mat, `(null)`, .before = `1`)
-  trans_mat <- dplyr::relocate(trans_mat, `(conversion)`, .before = `(null)`)
-  trans_mat <- dplyr::mutate(trans_mat, start = 0, .before = `(conversion)`)
+  trans_mat <- dplyr::relocate(trans_mat, `0`, .before = `1`)
+  trans_mat <- dplyr::relocate(trans_mat, `-1`, .before = `0`)
+  trans_mat <- dplyr::mutate(trans_mat, start = 0, .before = `-1`)
 
   trans_mat = as.matrix(trans_mat[,-1])
   trans_mat = rbind(
