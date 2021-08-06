@@ -4,10 +4,10 @@
 \alias{plot_path_lengths}
 \title{Plot Path Lengths}
 \usage{
-plot_path_lengths(path_list)
+plot_path_lengths(path_data, remove_repeating = FALSE)
 }
 \arguments{
-\item{path_list}{path_list}
+\item{path_data}{path_data}
 }
 \value{
 plotly plot

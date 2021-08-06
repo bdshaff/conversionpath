@@ -4,14 +4,10 @@
 \alias{fit_transition_matrix}
 \title{Compute MLE Markov Chain Transition Matrix}
 \usage{
-fit_transition_matrix(path_list, conv_count, drop_count)
+fit_transition_matrix(path_data)
 }
 \arguments{
-\item{path_list}{a list of paths}
-
-\item{conv_count}{vector containing the total conversions.}
-
-\item{drop_count}{vector containing the total cases that do not lead to a conversion}
+\item{path_data}{a list of paths}
 }
 \value{
 a transition matrix

@@ -10,6 +10,6 @@ License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-Imports: plotly, magrittr, purrr, dplyr, ggplot2, stringr, pals
+Imports: plotly, magrittr, purrr, dplyr, ggplot2, stringr, pals, tidyr, janitor
 Depends: 
     R (>= 2.10)

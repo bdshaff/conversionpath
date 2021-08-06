@@ -4,10 +4,10 @@
 \alias{plot_touchpoint_frequency}
 \title{Plot Touch-point Frequency}
 \usage{
-plot_touchpoint_frequency(path_list)
+plot_touchpoint_frequency(path_data, remove_repeating = FALSE)
 }
 \arguments{
-\item{path_list}{path_list}
+\item{path_data}{path_data}
 }
 \value{
 plotly plot
